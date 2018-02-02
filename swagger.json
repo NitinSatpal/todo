@@ -1,0 +1,695 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a todo app api documentation.",
+    "version": "1.0.0",
+    "title": "TODO API",
+    "contact": {
+      "email": "nitinsatpal@gmail.com"
+    }
+  },
+  "host": "13.58.243.96",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "tasks",
+      "description": "Create and manage to dos"
+    },
+    {
+      "name": "users",
+      "description": "Create and manage user Profile"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/tasks": {
+      "post": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "tags": [
+          "tasks"
+        ],
+        "summary": "Add a new to do",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "to do object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/taskCreationRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "to do successfully created",
+            "schema": {
+              "$ref": "#/definitions/taskCreationSuccessfulResponse"
+            }
+          },
+          "401": {
+            "description": "auth token is not authorized",
+            "schema": {
+              "$ref": "#/definitions/notAuthorized"
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{taskId}": {
+      "patch": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "tags": [
+          "tasks"
+        ],
+        "summary": "edit a to do",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "description": "Id of task to be edited ",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "to do object that needs to be edited",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/taskEditRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "to do successfully edited",
+            "schema": {
+              "$ref": "#/definitions/taskEditSuccessfulResponse"
+            }
+          },
+          "401": {
+            "description": "auth token is not authorized",
+            "schema": {
+              "$ref": "#/definitions/notAuthorized"
+            }
+          },
+          "404": {
+            "description": "wrong task id",
+            "schema": {
+              "$ref": "#/definitions/notFound"
+            }
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "tags": [
+          "tasks"
+        ],
+        "summary": "Delete a to do",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "description": "Id of task to be deleted ",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "to do successfully deleted",
+            "schema": {
+              "$ref": "#/definitions/taskDeleteSuccessfulResponse"
+            }
+          },
+          "401": {
+            "description": "auth token is not authorized",
+            "schema": {
+              "$ref": "#/definitions/notAuthorized"
+            }
+          },
+          "404": {
+            "description": "wrong task id",
+            "schema": {
+              "$ref": "#/definitions/notFound"
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "user signup",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "user object that needs to be created",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userCreationRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user successfully created",
+            "schema": {
+              "$ref": "#/definitions/userCreationSuccessfulResponse"
+            }
+          },
+          "409": {
+            "description": "email already exists",
+            "schema": {
+              "$ref": "#/definitions/emailAlreadyExists"
+            }
+          }
+        }
+      },
+      "patch": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "tags": [
+          "users"
+        ],
+        "summary": "user profile edit",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "user object that needs to be edited",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userEditRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user successfully edited",
+            "schema": {
+              "$ref": "#/definitions/userEditSuccessfulResponse"
+            }
+          },
+          "401": {
+            "description": "auth token is not authorized",
+            "schema": {
+              "$ref": "#/definitions/notAuthorized"
+            }
+          },
+          "409": {
+            "description": "email already exists",
+            "schema": {
+              "$ref": "#/definitions/emailAlreadyExists"
+            }
+          }
+        }
+      },
+      "delete": {
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "tags": [
+          "users"
+        ],
+        "summary": "user account delete",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "user object that needs to be deleted",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userDeletionRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user successfully deleted",
+            "schema": {
+              "$ref": "#/definitions/userDeletionSuccessfulResponse"
+            }
+          },
+          "401": {
+            "description": "auth token is not authorized",
+            "schema": {
+              "$ref": "#/definitions/notAuthorized"
+            }
+          }
+        }
+      }
+    },
+    "/authentication": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "user login",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "user object that needs to be authenticated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userLoginRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user successfully logged in",
+            "schema": {
+              "$ref": "#/definitions/userLoginSuccessfulResponse"
+            }
+          },
+          "401": {
+            "description": "wrong email id provided",
+            "schema": {
+              "$ref": "#/definitions/emailNotExists"
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "notFound": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "NotFound"
+        },
+        "message": {
+          "type": "string",
+          "example": "No record found for id {provided id}"
+        },
+        "code": {
+          "type": "integer",
+          "example": 404
+        },
+        "className": {
+          "type": "string",
+          "example": "not-found"
+        },
+        "errors": {
+          "type": "object",
+          "example": {}
+        }
+      }
+    },
+    "notAuthorized": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "NotAuthenticated"
+        },
+        "message": {
+          "type": "string",
+          "example": "No auth token"
+        },
+        "code": {
+          "type": "integer",
+          "example": 401
+        },
+        "className": {
+          "type": "string",
+          "example": "not-authenticated"
+        },
+        "data": {
+          "type": "object",
+          "example": {}
+        },
+        "errors": {
+          "type": "object",
+          "example": {}
+        }
+      }
+    },
+    "taskCreationRequest": {
+      "type": "object",
+      "required": [
+        "task"
+      ],
+      "properties": {
+        "task": {
+          "type": "string",
+          "example": "Need to pay electricity bill"
+        }
+      }
+    },
+    "taskCreationSuccessfulResponse": {
+      "type": "object",
+      "properties": {
+        "task": {
+          "type": "string",
+          "example": "Need to pay electricity bill"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2018-01-19T18:50:36.162Z"
+        },
+        "ownerId": {
+          "type": "string",
+          "example": "5a623c1cedc12f2423b37c2e"
+        },
+        "_id": {
+          "type": "string",
+          "example": "5a623c1cedc12f2423b37c2e"
+        }
+      }
+    },
+    "taskEditRequest": {
+      "type": "object",
+      "required": [
+        "task"
+      ],
+      "properties": {
+        "task": {
+          "type": "string",
+          "example": "Need to pay electricity bill - Updated!"
+        }
+      }
+    },
+    "taskEditSuccessfulResponse": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "5a623c1cedc12f2423b37c2e"
+        },
+        "task": {
+          "type": "string",
+          "example": "Need to pay electricity bill - Updated!"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2018-01-19T18:50:36.162Z"
+        },
+        "ownerId": {
+          "type": "string",
+          "example": "5a623c1cedc12f2423b37c2e"
+        }
+      }
+    },
+    "taskDeleteSuccessfulResponse": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "5a623c1cedc12f2423b37c2e"
+        },
+        "task": {
+          "type": "string",
+          "example": "Need to pay electricity bill - Updated!"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2018-01-19T18:50:36.162Z"
+        },
+        "ownerId": {
+          "type": "string",
+          "example": "5a623c1cedc12f2423b37c2e"
+        }
+      }
+    },
+    "userCreationRequest": {
+      "type": "object",
+      "required": [
+        "name",
+        "email",
+        "password"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Nitin Satpal"
+        },
+        "email": {
+          "type": "string",
+          "example": "nitinsatpal@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "password123"
+        }
+      }
+    },
+    "userCreationSuccessfulResponse": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Nitin Satpal"
+        },
+        "email": {
+          "type": "string",
+          "example": "nitinsatpal@gmail.com"
+        },
+        "_id": {
+          "type": "string",
+          "example": "5a623c1cedc12f2423b37c2e"
+        }
+      }
+    },
+    "userEditRequest": {
+      "type": "object",
+      "required": [
+        "_id"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "5a623c1cedc12f2423b37c2e"
+        },
+        "name": {
+          "type": "string",
+          "example": "Nitin"
+        },
+        "email": {
+          "type": "string",
+          "example": "nitin@gmail.com"
+        }
+      }
+    },
+    "userEditSuccessfulResponse": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "5a623c1cedc12f2423b37c2e"
+          },
+          "name": {
+            "type": "string",
+            "example": "Nitin"
+          },
+          "email": {
+            "type": "string",
+            "example": "nitin@gmail.com"
+          }
+        }
+      }
+    },
+    "userDeletionRequest": {
+      "type": "object",
+      "required": [
+        "_id"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "5a623c1cedc12f2423b37c2e"
+        }
+      }
+    },
+    "userDeletionSuccessfulResponse": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "example": "5a623c1cedc12f2423b37c2e"
+          },
+          "name": {
+            "type": "string",
+            "example": "Nitin"
+          },
+          "email": {
+            "type": "string",
+            "example": "nitin@gmail.com"
+          }
+        }
+      }
+    },
+    "emailAlreadyExists": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Conflict"
+        },
+        "message": {
+          "type": "string",
+          "example": "Email nitinsatpal@gmail.com already exists"
+        },
+        "code": {
+          "type": "integer",
+          "example": 409
+        },
+        "className": {
+          "type": "string",
+          "example": "conflict"
+        },
+        "errors": {
+          "type": "object",
+          "example": {}
+        }
+      }
+    },
+    "userLoginRequest": {
+      "type": "object",
+      "required": [
+        "strategy",
+        "email",
+        "password"
+      ],
+      "properties": {
+        "strategy": {
+          "type": "string",
+          "example": "local"
+        },
+        "email": {
+          "type": "string",
+          "example": "nitinsatpal@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "password123"
+        }
+      }
+    },
+    "userLoginSuccessfulResponse": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string",
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyIsInR5cGUiOiJhY2Nlc3MifQ.eyJ1c2VySWQiOiI1YTYyM2MxY2VkYzEyZjI0MjNiMzdjMmUiLCJpYXQiOjE1MTYzODc2MDEsImV4cCI6MTUxNjQ3NDAwMSwiYXVkIjoiaHR0cHM6Ly95b3VyZG9tYWluLmNvbSIsImlzcyI6ImZlYXRoZXJzIiwic3ViIjoiYW5vbnltb3VzIiwianRpIjoiNWMyMzI3NDgtMjQ4ZS00YTBkLWIyNzYtMGRjYTYwYWE2NzM1In0.VEoTwXFAGhdbVgjHts1TRTEOE6rmAvbBVkJK2J2GwoA"
+        }
+      }
+    },
+    "emailNotExists": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "NotAuthenticated"
+        },
+        "message": {
+          "type": "string",
+          "example": "Error"
+        },
+        "code": {
+          "type": "integer",
+          "example": 401
+        },
+        "className": {
+          "type": "string",
+          "example": "not-authenticated"
+        },
+        "error": {
+          "type": "object",
+          "example": {}
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "url": "http://13.58.243.96:3000"
+  }
+}

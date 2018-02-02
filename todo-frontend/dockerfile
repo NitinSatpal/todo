@@ -1,0 +1,18 @@
+# base image
+FROM node:8.5.0
+
+# set working directory
+RUN mkdir /usr/src/frontend
+WORKDIR /usr/src/frontend
+
+# add `/usr/src/frontend/node_modules/.bin` to $PATH
+ENV PATH /usr/src/frontend/node_modules/.bin:$PATH
+
+# install and cache app dependencies
+ADD package.json /usr/src/frontend/package.json
+RUN npm install --silent
+RUN npm install react-scripts@0.1.0 -g --silent
+ADD . /usr/src/frontend
+
+# start app
+CMD ["npm", "start"]

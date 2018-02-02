@@ -1,0 +1,16 @@
+version: "2"
+services:
+  web:
+    build: ./todo-frontend
+    ports:
+      - "3000:3000"
+  backend:
+    build: ./todo-api
+    ports:
+      - "3030:3030"
+  mongo:
+    image: mongo
+    volumes:
+      - /data/mongodb/db:/data/db
+    ports:
+      - "27017:27017"
